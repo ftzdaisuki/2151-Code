@@ -26,6 +26,7 @@ public class Robot extends SampleRobot {
     RobotDrive Tier2;//The second set of Talons.
     Joystick gamePad; //our gamepad! wooo.
     Relay relayArms; //our arms lifting mech
+    Relay relayGrab; //the grabby bit
     
     public Robot() {
         Tier1 = new RobotDrive(0, 2);
@@ -33,6 +34,7 @@ public class Robot extends SampleRobot {
         Tier2 = new RobotDrive(1, 3);
         Tier2.setExpiration(0.1);
         relayArms = new Relay(0);
+        relayGrab = new Relay(1);
         gamePad = new Joystick(0); //init code
         
         
@@ -46,8 +48,11 @@ public class Robot extends SampleRobot {
         Tier1.setSafetyEnabled(true);
         Tier2.setSafetyEnabled(true);
         while (isOperatorControl() && isEnabled()) {
-        	boolean wat = gamePad.getRawButton(5); //for lowering the arms
+        	boolean buttonLower = gamePad.getRawButton(5); //for lowering the arms
         	boolean buttonRaise = gamePad.getRawButton(6); //or raising them    	
+        	boolean buttonRelease = gamePad.getRawButton(7); //let the boxes go
+        	boolean buttonGrab = gamePad.getRawButton(8); //or grab them (backwards because OCD)
+        	
         	double leftSide = gamePad.getRawAxis(1) * .75; //divide by two because
         	double rightSide = gamePad.getRawAxis(3) * .75; //way too powerful otherwise
             	
@@ -62,26 +67,46 @@ public class Robot extends SampleRobot {
         	
         	
         	
-        	while (wat) { //entering loops for raising and lowering arms
-        		relayArms.set(Relay.Value.kOn); //lower the arms
-        		wat = gamePad.getRawButton(5);
+        	while (buttonLower) { //entering loops for raising and lowering arms
+        		relayArms.set(Relay.Value.kForward); //lower the arms
         		leftSide = gamePad.getRawAxis(1) * .75;
             	rightSide = gamePad.getRawAxis(3) * .75;
             	Tier1.tankDrive(-leftSide, -rightSide);
             	Tier2.tankDrive(-leftSide, -rightSide);
+            	buttonLower = gamePad.getRawButton(5);
             	Timer.delay(0.001);
         	}
         	
         	while (buttonRaise) {
         		relayArms.set(Relay.Value.kReverse); //or raise them
-        		buttonRaise = gamePad.getRawButton(6);    	
             	leftSide = gamePad.getRawAxis(1) * .75; 
             	rightSide = gamePad.getRawAxis(3) * .75;
             	Tier1.tankDrive(-leftSide, -rightSide); 
             	Tier2.tankDrive(-leftSide, -rightSide);
+            	buttonRaise = gamePad.getRawButton(6); 
             	Timer.delay(0.001);
         	}
+        	while (buttonGrab) {
+        		relayGrab.set(Relay.Value.kForward); //or raise them
+            	leftSide = gamePad.getRawAxis(1) * .75; 
+            	rightSide = gamePad.getRawAxis(3) * .75;
+            	Tier1.tankDrive(-leftSide, -rightSide); 
+            	Tier2.tankDrive(-leftSide, -rightSide);
+            	buttonGrab = gamePad.getRawButton(7); 
+            	Timer.delay(0.001);
         	
+        	}
+        	while(buttonRelease) {
+        	
+        		relayGrab.set(Relay.Value.kReverse); //
+        		leftSide = gamePad.getRawAxis(1) * .75; 
+        		rightSide = gamePad.getRawAxis(3) * .75;
+        		Tier1.tankDrive(-leftSide, -rightSide); 
+        		Tier2.tankDrive(-leftSide, -rightSide);
+        		buttonRelease = gamePad.getRawButton(8); 
+        		Timer.delay(0.001);
+        	}
+        	relayGrab.set(Relay.Value.kOff); //ensure our relays stay off if no button is being pressed
         	relayArms.set(Relay.Value.kOff);
         	Tier1.tankDrive(-leftSide, -rightSide); //negated because it's backwards
         	Tier2.tankDrive(-leftSide, -rightSide);
