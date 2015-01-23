@@ -7,20 +7,7 @@ import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Timer;
 
-/**
- * This is a demo program showing the use of the RobotDrive class, specifically it 
- * contains the code necessary to operate a robot with tank drive.
- *
- * The VM is configured to automatically run this class, and to call the
- * functions corresponding to each mode, as described in the SampleRobot
- * documentation. If you change the name of this class or the package after
- * creating this project, you must also update the manifest file in the resource
- * directory.
- *
- * WARNING: While it may look like a good choice to use for your code if you're inexperienced,
- * don't. Unless you know what you are doing, complex code will be much more difficult under
- * this system. Use IterativeRobot or Command-Based instead if you're new.
- */
+
 public class Robot extends SampleRobot {
     RobotDrive Tier1;//The first set of Talons.
     RobotDrive Tier2;//The second set of Talons.
@@ -48,13 +35,12 @@ public class Robot extends SampleRobot {
         Tier1.setSafetyEnabled(true);
         Tier2.setSafetyEnabled(true);
         while (isOperatorControl() && isEnabled()) {
-        	//boolean buttonLower = gamePad.getRawButton(5); //for lowering the arms
-        	//boolean buttonRaise = gamePad.getRawButton(6); //or raising them    	
-        	boolean buttonRelease = gamePad.getRawButton(5); //let the boxes go
-        	boolean buttonGrab = gamePad.getRawButton(6); //or grab them (backwards because OCD)
-        	
-        	double leftSide = gamePad.getRawAxis(1) * .75; //divide by two because
-        	double rightSide = gamePad.getRawAxis(3) * .75; //way too powerful otherwise
+        	boolean buttonLower = gamePad.getRawButton(5); //for lowering the arms
+        	boolean buttonRaise = gamePad.getRawButton(6); //or raising them    	
+        	boolean buttonRelease = gamePad.getRawButton(7); //let the boxes go
+        	boolean buttonGrab = gamePad.getRawButton(8); //or grab them (backwards because OCD)
+        	double leftSide = gamePad.getRawAxis(1) * .75; //75% power
+        	double rightSide = gamePad.getRawAxis(3) * .75; //otherwise we move insanely too fast
             	
         	//if (leftSide < 0)
             //	leftSide = leftSide * leftSide * -1; //Exponential increases, we need If/Then logic here
@@ -65,52 +51,52 @@ public class Robot extends SampleRobot {
             //else            //if the input was negative, since squaring
             //	rightSide = rightSide * rightSide;      //a negative will always make a positive and
         	
+        	//Above is a motor curve logic bit. Uncomment if you wish to test it.
         	
+        	while (buttonLower) { //entering loops for raising and lowering arms
+        		relayArms.set(Relay.Value.kForward); //lower the arms
+        		leftSide = gamePad.getRawAxis(1) * .75;
+            	rightSide = gamePad.getRawAxis(3) * .75;
+            	Tier1.tankDrive(-leftSide, -rightSide);
+            	Tier2.tankDrive(-leftSide, -rightSide);
+            	buttonLower = gamePad.getRawButton(5);
+            	Timer.delay(0.001);
+        	}
         	
-        	//while (buttonLower) { //entering loops for raising and lowering arms
-        		//relayArms.set(Relay.Value.kForward); //lower the arms
-        		//leftSide = gamePad.getRawAxis(1) * .75;
-            	//rightSide = gamePad.getRawAxis(3) * .75;
-            	//Tier1.tankDrive(-leftSide, -rightSide);
-            	//Tier2.tankDrive(-leftSide, -rightSide);
-            	//buttonLower = gamePad.getRawButton(5);
-            	//Timer.delay(0.001);
-        	//}
-        	
-        	//while (buttonRaise) {
-        		//relayArms.set(Relay.Value.kReverse); //or raise them
-            	//leftSide = gamePad.getRawAxis(1) * .75; 
-            	//rightSide = gamePad.getRawAxis(3) * .75;
-            	//Tier1.tankDrive(-leftSide, -rightSide); 
-            	//Tier2.tankDrive(-leftSide, -rightSide);
-            	//buttonRaise = gamePad.getRawButton(6); 
-            	//Timer.delay(0.001);
-        	//}
-        	while (buttonGrab) {
-        		relayGrab.set(Relay.Value.kForward); //or raise them
+        	while (buttonRaise) {
+        		relayArms.set(Relay.Value.kReverse); //or raise them
             	leftSide = gamePad.getRawAxis(1) * .75; 
             	rightSide = gamePad.getRawAxis(3) * .75;
             	Tier1.tankDrive(-leftSide, -rightSide); 
             	Tier2.tankDrive(-leftSide, -rightSide);
-            	buttonGrab = gamePad.getRawButton(5); 
+            	buttonRaise = gamePad.getRawButton(6); 
+            	Timer.delay(0.001);
+        	}
+        	while (buttonGrab) {
+        		relayGrab.set(Relay.Value.kForward); //grab a tote/recycle bin
+            	leftSide = gamePad.getRawAxis(1) * .75; 
+            	rightSide = gamePad.getRawAxis(3) * .75;
+            	Tier1.tankDrive(-leftSide, -rightSide); 
+            	Tier2.tankDrive(-leftSide, -rightSide);
+            	buttonGrab = gamePad.getRawButton(7); 
             	Timer.delay(0.001);
         	
         	}
         	while(buttonRelease) {
         	
-        		relayGrab.set(Relay.Value.kReverse); //
+        		relayGrab.set(Relay.Value.kReverse); //or let it go
         		leftSide = gamePad.getRawAxis(1) * .75; 
         		rightSide = gamePad.getRawAxis(3) * .75;
         		Tier1.tankDrive(-leftSide, -rightSide); 
         		Tier2.tankDrive(-leftSide, -rightSide);
-        		buttonRelease = gamePad.getRawButton(6); 
+        		buttonRelease = gamePad.getRawButton(8); 
         		Timer.delay(0.001);
         	}
         	relayGrab.set(Relay.Value.kOff); //ensure our relays stay off if no button is being pressed
-        	relayArms.set(Relay.Value.kOff);
+        	relayArms.set(Relay.Value.kOff); //we were missing these commands and got very confused when the relays stuck on
         	Tier1.tankDrive(-leftSide, -rightSide); //negated because it's backwards
         	Tier2.tankDrive(-leftSide, -rightSide);
-            Timer.delay(0.001);		//add a bit of delay to ensure nothing breaks
+            Timer.delay(0.001);		//1ms delay for very fast updating (now watch as we run out of memory)
         }
     }
 }
