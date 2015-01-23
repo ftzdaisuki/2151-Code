@@ -13,6 +13,8 @@ So far, here is everything the code does:
 
 -Gamepad controls!
 
+-A motor curve! (Commented out because borked)
+
 -Comments!
 
 -And more!
