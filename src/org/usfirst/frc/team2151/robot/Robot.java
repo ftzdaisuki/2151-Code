@@ -6,7 +6,8 @@ import edu.wpi.first.wpilibj.SampleRobot;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Timer;
-
+//to change the motor power: find gamePad.getRawAxis and edit the multiplying value.
+//do this for all getRawAxis values. Be consistent!
 
 public class Robot extends SampleRobot {
     RobotDrive Tier1;//The first set of Talons.
@@ -39,24 +40,26 @@ public class Robot extends SampleRobot {
         	boolean buttonRaise = gamePad.getRawButton(6); //or raising them    	
         	boolean buttonRelease = gamePad.getRawButton(7); //let the boxes go
         	boolean buttonGrab = gamePad.getRawButton(8); //or grab them (backwards because OCD)
-        	double leftSide = gamePad.getRawAxis(1) * .75; //75% power
-        	double rightSide = gamePad.getRawAxis(3) * .75; //otherwise we move insanely too fast
+        	double leftSide = gamePad.getRawAxis(1) * .50; //50% power
+        	double rightSide = gamePad.getRawAxis(3) * .50; //otherwise we move insanely too fast
             	
-        	//if (leftSide < 0)
-            //	leftSide = leftSide * leftSide * -1; //Exponential increases, we need If/Then logic here
-           // else
-           // 	leftSide = leftSide *leftSide;
-           // if (rightSide < 0)
-            //	rightSide = rightSide * rightSide * -1; //Multiply by -1 to make the value negative 
-            //else            //if the input was negative, since squaring
-            //	rightSide = rightSide * rightSide;      //a negative will always make a positive and
+        	/*
+        	if (leftSide < 0)
+            	leftSide = leftSide * leftSide * -1; //Exponential increases, we need If/Then logic here
+            else
+           		leftSide = leftSide *leftSide;
+            if (rightSide < 0)
+           		rightSide = rightSide * rightSide * -1; //Multiply by -1 to make the value negative 
+            else            //if the input was negative, since squaring
+            	rightSide = rightSide * rightSide;      //a negative will always make a positive and
         	
-        	//Above is a motor curve logic bit. Uncomment if you wish to test it.
+        	Above is a motor curve logic bit. Uncomment if you wish to test it.
+        	*/
         	
         	while (buttonLower) { //entering loops for raising and lowering arms
         		relayArms.set(Relay.Value.kForward); //lower the arms
-        		leftSide = gamePad.getRawAxis(1) * .75;
-            	rightSide = gamePad.getRawAxis(3) * .75;
+        		leftSide = gamePad.getRawAxis(1) * .50;
+            	rightSide = gamePad.getRawAxis(3) * .50;
             	Tier1.tankDrive(-leftSide, -rightSide);
             	Tier2.tankDrive(-leftSide, -rightSide);
             	buttonLower = gamePad.getRawButton(5);
@@ -65,8 +68,8 @@ public class Robot extends SampleRobot {
         	
         	while (buttonRaise) {
         		relayArms.set(Relay.Value.kReverse); //or raise them
-            	leftSide = gamePad.getRawAxis(1) * .75; 
-            	rightSide = gamePad.getRawAxis(3) * .75;
+            	leftSide = gamePad.getRawAxis(1) * .50; 
+            	rightSide = gamePad.getRawAxis(3) * .50;
             	Tier1.tankDrive(-leftSide, -rightSide); 
             	Tier2.tankDrive(-leftSide, -rightSide);
             	buttonRaise = gamePad.getRawButton(6); 
@@ -74,8 +77,8 @@ public class Robot extends SampleRobot {
         	}
         	while (buttonGrab) {
         		relayGrab.set(Relay.Value.kForward); //grab a tote/recycle bin
-            	leftSide = gamePad.getRawAxis(1) * .75; 
-            	rightSide = gamePad.getRawAxis(3) * .75;
+            	leftSide = gamePad.getRawAxis(1) * .50; 
+            	rightSide = gamePad.getRawAxis(3) * .50;
             	Tier1.tankDrive(-leftSide, -rightSide); 
             	Tier2.tankDrive(-leftSide, -rightSide);
             	buttonGrab = gamePad.getRawButton(7); 
@@ -85,8 +88,8 @@ public class Robot extends SampleRobot {
         	while(buttonRelease) {
         	
         		relayGrab.set(Relay.Value.kReverse); //or let it go
-        		leftSide = gamePad.getRawAxis(1) * .75; 
-        		rightSide = gamePad.getRawAxis(3) * .75;
+        		leftSide = gamePad.getRawAxis(1) * .50; 
+        		rightSide = gamePad.getRawAxis(3) * .50;
         		Tier1.tankDrive(-leftSide, -rightSide); 
         		Tier2.tankDrive(-leftSide, -rightSide);
         		buttonRelease = gamePad.getRawButton(8); 
@@ -102,3 +105,5 @@ public class Robot extends SampleRobot {
 }
    
 
+
+	
