@@ -3,20 +3,20 @@ Written in Java with Eclipse Kepler and Luna!
 
 So far, here is everything the code does:
 
--Arcade drive at 50% power!
+- Arcade drive at 50% power!
 
--Two relays!
+- Two relays!
 
--Two sets of motor controllers!
+- Two sets of motor controllers!
 
--Really nooby programming!
+- Really nooby programming!
 
--Gamepad controls! 
+- Gamepad controls! 
 
--A motor curve! (Commented out because borked)
+- A motor curve! 
 
--Comments!
+- Comments!
 
--And more!
+- And more!
 
 Download today! (note: not responsible for physical, mental, or emotional damage or stress caused by your usage of this code.)
