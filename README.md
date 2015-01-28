@@ -3,15 +3,15 @@ Written in Java with Eclipse Kepler and Luna!
 
 So far, here is everything the code does:
 
--Drives with tank drive at 75% power!
+-Arcade drive at 50% power!
 
--Two relays, controlled to go forwards and backwards while a button is held!
+-Two relays!
 
 -Two sets of motor controllers!
 
 -Really nooby programming!
 
--Gamepad controls!
+-Gamepad controls! 
 
 -A motor curve! (Commented out because borked)
 
