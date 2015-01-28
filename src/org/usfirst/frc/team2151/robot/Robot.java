@@ -40,8 +40,8 @@ public class Robot extends SampleRobot {
         	boolean buttonRaise = gamePad.getRawButton(6); //or raising them    	
         	boolean buttonRelease = gamePad.getRawButton(7); //let the boxes go
         	boolean buttonGrab = gamePad.getRawButton(8); //or grab them (backwards because OCD)
-        	double leftSide = gamePad.getRawAxis(2) * .50; //50% power
-        	double rightSide = gamePad.getRawAxis(0) * .50; //otherwise we move insanely too fast
+        	double leftSide = gamePad.getRawAxis(1) * .5; //50% power
+        	double rightSide = gamePad.getRawAxis(2) * .5; //otherwise we move insanely too fast
             	
         	/*
         	if (leftSide < 0)
