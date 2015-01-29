@@ -22,7 +22,6 @@ public class Robot extends SampleRobot {
         Tier2 = new RobotDrive(1, 3);
         Tier2.setExpiration(0.1);
         relayArms = new Relay(0, Relay.Direction.kBoth);
-        relayGrab = new Relay(1);
         gamePad = new Joystick(0); //init code
         
         
@@ -38,8 +37,6 @@ public class Robot extends SampleRobot {
         while (isOperatorControl() && isEnabled()) {
         	boolean buttonLower = gamePad.getRawButton(6); //for lowering the arms
         	boolean buttonRaise = gamePad.getRawButton(5); //or raising them    	
-        	boolean buttonRelease = gamePad.getRawButton(7); //let the boxes go
-        	boolean buttonGrab = gamePad.getRawButton(8); //or grab them (backwards because OCD)
         	double leftSide = gamePad.getRawAxis(1) * .5; //50% power
         	double rightSide = gamePad.getRawAxis(2) * .5; //otherwise we move insanely too fast
             	
@@ -57,6 +54,7 @@ public class Robot extends SampleRobot {
         	*/
         	
         	while (buttonLower) { //entering loops for raising and lowering arms
+        		relayArms.set(Relay.Value.kOn);
         		relayArms.set(Relay.Value.kForward); //lower the arms
         		leftSide = gamePad.getRawAxis(1) * .50;
             	rightSide = gamePad.getRawAxis(2) * .50;
@@ -75,27 +73,7 @@ public class Robot extends SampleRobot {
             	buttonRaise = gamePad.getRawButton(5); 
             	Timer.delay(0.001);
         	}
-        	while (buttonGrab) {
-        		relayGrab.set(Relay.Value.kForward); //grab a tote/recycle bin
-            	leftSide = gamePad.getRawAxis(1) * .50; 
-            	rightSide = gamePad.getRawAxis(2) * .50;
-            	Tier1.arcadeDrive(-leftSide, -rightSide); 
-            	Tier2.arcadeDrive(-leftSide, -rightSide);
-            	buttonGrab = gamePad.getRawButton(7); 
-            	Timer.delay(0.001);
-        	
-        	}
-        	while(buttonRelease) {
-        	
-        		relayGrab.set(Relay.Value.kReverse); //or let it go
-        		leftSide = gamePad.getRawAxis(1) * .50; 
-        		rightSide = gamePad.getRawAxis(2) * .50;
-        		Tier1.arcadeDrive(-leftSide, -rightSide); 
-        		Tier2.arcadeDrive(-leftSide, -rightSide);
-        		buttonRelease = gamePad.getRawButton(8); 
-        		Timer.delay(0.001);
-        	}
-        	relayGrab.set(Relay.Value.kOff); //ensure our relays stay off if no button is being pressed
+
         	relayArms.set(Relay.Value.kOff); //we were missing these commands and got very confused when the relays stuck on
         	Tier1.arcadeDrive(-leftSide, -rightSide); //negated because it's backwards
         	Tier2.arcadeDrive(-leftSide, -rightSide);
