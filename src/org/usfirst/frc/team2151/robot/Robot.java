@@ -21,7 +21,7 @@ public class Robot extends SampleRobot {
         Tier1.setExpiration(0.1);
         Tier2 = new RobotDrive(1, 3);
         Tier2.setExpiration(0.1);
-        relayArms = new Relay(0);
+        relayArms = new Relay(0, Relay.Direction.kBoth);
         relayGrab = new Relay(1);
         gamePad = new Joystick(0); //init code
         
@@ -36,8 +36,8 @@ public class Robot extends SampleRobot {
         Tier1.setSafetyEnabled(true);
         Tier2.setSafetyEnabled(true);
         while (isOperatorControl() && isEnabled()) {
-        	boolean buttonLower = gamePad.getRawButton(5); //for lowering the arms
-        	boolean buttonRaise = gamePad.getRawButton(6); //or raising them    	
+        	boolean buttonLower = gamePad.getRawButton(6); //for lowering the arms
+        	boolean buttonRaise = gamePad.getRawButton(5); //or raising them    	
         	boolean buttonRelease = gamePad.getRawButton(7); //let the boxes go
         	boolean buttonGrab = gamePad.getRawButton(8); //or grab them (backwards because OCD)
         	double leftSide = gamePad.getRawAxis(1) * .5; //50% power
@@ -62,7 +62,7 @@ public class Robot extends SampleRobot {
             	rightSide = gamePad.getRawAxis(2) * .50;
             	Tier1.arcadeDrive(-leftSide, -rightSide);
             	Tier2.arcadeDrive(-leftSide, -rightSide);
-            	buttonLower = gamePad.getRawButton(5);
+            	buttonLower = gamePad.getRawButton(6);
             	Timer.delay(0.001);
         	}
         	
@@ -72,7 +72,7 @@ public class Robot extends SampleRobot {
             	rightSide = gamePad.getRawAxis(2) * .50;
             	Tier1.arcadeDrive(-leftSide, -rightSide); 
             	Tier2.arcadeDrive(-leftSide, -rightSide);
-            	buttonRaise = gamePad.getRawButton(6); 
+            	buttonRaise = gamePad.getRawButton(5); 
             	Timer.delay(0.001);
         	}
         	while (buttonGrab) {
