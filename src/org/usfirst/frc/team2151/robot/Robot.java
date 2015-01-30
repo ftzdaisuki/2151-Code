@@ -21,17 +21,14 @@ public class Robot extends SampleRobot {
         Tier1.setExpiration(0.1);
         Tier2 = new RobotDrive(1, 3);
         Tier2.setExpiration(0.1);
-        relayArms = new Relay(0, Relay.Direction.kBoth);
+        relayArms = new Relay(0);
         gamePad = new Joystick(0); //init code
         
         
     }
 
     
-    /**
-     * Runs the motors with tank steering.
-     */
-    public void operatorControl() {
+      public void operatorControl() {
         Tier1.setSafetyEnabled(true);
         Tier2.setSafetyEnabled(true);
         while (isOperatorControl() && isEnabled()) {
@@ -54,8 +51,7 @@ public class Robot extends SampleRobot {
         	*/
         	
         	while (buttonLower) { //entering loops for raising and lowering arms
-        		relayArms.set(Relay.Value.kOn);
-        		relayArms.set(Relay.Value.kForward); //lower the arms
+        		relayArms.set(Relay.Value.kForward);
         		leftSide = gamePad.getRawAxis(1) * .50;
             	rightSide = gamePad.getRawAxis(2) * .50;
             	Tier1.arcadeDrive(-leftSide, -rightSide);
