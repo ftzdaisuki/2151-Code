@@ -55,13 +55,8 @@ public class Robot extends SampleRobot {
         	Above is a motor curve logic bit. Uncomment if you wish to test it.
         	*/
         	
-        	if (limitSwitch1.get()){
-        		System.out.println("Switch 1 pressed.");
-        	}
-        	if (limitSwitch2.get()){
-        		System.out.println("Switch 2 pressed.");
-        	}
-        	while (buttonLower) { //entering loops for raising and lowering arms
+        	
+        	while (buttonLower && limitSwitch2.get()) { //entering loops for raising and lowering arms
         		relayArms.set(Relay.Value.kForward);
         		leftSide = gamePad.getRawAxis(1) * .50;
             	rightSide = gamePad.getRawAxis(2) * .50;
@@ -71,7 +66,7 @@ public class Robot extends SampleRobot {
             	Timer.delay(0.001);
         	}
         	
-        	while (buttonRaise) {
+        	while (buttonRaise && limitSwitch1.get()) {
         		relayArms.set(Relay.Value.kReverse); //or raise them
             	leftSide = gamePad.getRawAxis(1) * .50; 
             	rightSide = gamePad.getRawAxis(2) * .50;
