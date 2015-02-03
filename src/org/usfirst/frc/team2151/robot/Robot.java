@@ -7,6 +7,8 @@ import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.Ultrasonic;
+
 //to change the motor power: find gamePad.getRawAxis and edit the multiplying value.
 //do this for all getRawAxis values. Be consistent!
 
@@ -18,6 +20,7 @@ public class Robot extends SampleRobot {
     Relay relayGrab; //the grabby bit
     DigitalInput limitSwitch1;
     DigitalInput limitSwitch2;
+    Ultrasonic ultra;
     
     public Robot() {
         Tier1 = new RobotDrive(0, 2);
@@ -28,10 +31,14 @@ public class Robot extends SampleRobot {
         gamePad = new Joystick(0); //init code
         limitSwitch1 = new DigitalInput(0);
         limitSwitch2 = new DigitalInput(1);
-        
+        ultra = new Ultrasonic(3,4); //these ports are just used as placeholders. Change to (ULTRASONIC_ECHO_PULSE_OUTPUT, ULTRASONIC_TRIGGER_PULSE_INPUT)
+        ultra.setAutomaticMode(true);
+        double range = ultra.getRangeInches();
         
     }
-
+    /* Not 100% sure what to do with this line here:
+      ultra = new Ultrasonic(ULTRASONIC_PING, ULTRASONIC_ECHO);
+    */
     
       public void operatorControl() {
         Tier1.setSafetyEnabled(true);
