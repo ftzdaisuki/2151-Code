@@ -30,6 +30,7 @@ public class Robot extends SampleRobot {
         limitSwitch1 = new DigitalInput(0);
         limitSwitch2 = new DigitalInput(1);
         ultra = new Ultrasonic(3,4); //these ports are just used as placeholders. Change to (ULTRASONIC_ECHO_PULSE_OUTPUT, ULTRASONIC_TRIGGER_PULSE_INPUT)
+        ultra.setEnabled(true);
         ultra.setAutomaticMode(true);
         
         
