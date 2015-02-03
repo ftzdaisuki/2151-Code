@@ -33,7 +33,7 @@ public class Robot extends SampleRobot {
         limitSwitch2 = new DigitalInput(1);
         ultra = new Ultrasonic(3,4); //these ports are just used as placeholders. Change to (ULTRASONIC_ECHO_PULSE_OUTPUT, ULTRASONIC_TRIGGER_PULSE_INPUT)
         ultra.setAutomaticMode(true);
-        double range = ultra.getRangeInches();
+        
         
     }
     /* Not 100% sure what to do with this line here:
@@ -47,7 +47,8 @@ public class Robot extends SampleRobot {
         	boolean buttonLower = gamePad.getRawButton(6); //for lowering the arms
         	boolean buttonRaise = gamePad.getRawButton(5); //or raising them    	
         	double leftSide = gamePad.getRawAxis(1) * .5; //50% power
-        	double rightSide = gamePad.getRawAxis(2) * .5; //otherwise we move insanely too fast
+        	double rightSide = gamePad.getRawAxis(2) * .5;//otherwise we move insanely too fast
+        	double range = ultra.getRangeInches();
             	
         	/*
         	if (leftSide < 0)
