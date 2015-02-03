@@ -8,10 +8,10 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Ultrasonic;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 //to change the motor power: find gamePad.getRawAxis and edit the multiplying value.
 //do this for all getRawAxis values. Be consistent!
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Robot extends SampleRobot {
     RobotDrive Drive;//The first set of Talons.
@@ -45,26 +45,9 @@ public class Robot extends SampleRobot {
         	boolean buttonLower = gamePad.getRawButton(6); //for lowering the arms
         	boolean buttonRaise = gamePad.getRawButton(5); //or raising them    	
         	double leftSide = gamePad.getRawAxis(1) * .5; //50% power
-<<<<<<< HEAD
         	double rightSide = gamePad.getRawAxis(2) * .5; //otherwise we move insanely too fast
-=======
-        	double rightSide = gamePad.getRawAxis(2) * .5;//otherwise we move insanely too fast
         	double range = ultra.getRangeInches();
-            	
-        	/*
-        	if (leftSide < 0)
-            	leftSide = leftSide * leftSide * -1; //Exponential increases, we need If/Then logic here
-            else
-           		leftSide = leftSide *leftSide;
-            if (rightSide < 0)
-           		rightSide = rightSide * rightSide * -1; //Multiply by -1 to make the value negative 
-            else            //if the input was negative, since squaring
-            	rightSide = rightSide * rightSide;      //a negative will always make a positive and
-        	
-        	Above is a motor curve logic bit. Uncomment if you wish to test it.
-        	*/
-        	
->>>>>>> origin/master
+
         	
         	while (buttonLower && limitSwitch2.get()) { //entering loops for raising and lowering arms
         		relayArms.set(Relay.Value.kForward);
