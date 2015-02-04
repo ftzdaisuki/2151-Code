@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Ultrasonic;
+import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 //to change the motor power: find gamePad.getRawAxis and edit the multiplying value.
@@ -16,8 +17,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Robot extends SampleRobot {
     RobotDrive Drive;//The first set of Talons.
     Joystick gamePad; //our gamepad! wooo.
-    Relay relayArms; //our arms lifting mech
-    Relay relayGrab; //the grabby bit
+    Relay relayArms; //opening and closing the arms
+    Victor armsLift; //the grabby bit
     DigitalInput limitSwitch1;
     DigitalInput limitSwitch2;
     Ultrasonic ultra;
@@ -26,6 +27,7 @@ public class Robot extends SampleRobot {
         Drive = new RobotDrive(0, 1, 2, 3);
         Drive.setExpiration(0.1);
         relayArms = new Relay(0);
+        armsLift = new Victor(4);
         gamePad = new Joystick(0); //init code
         limitSwitch1 = new DigitalInput(0);
         limitSwitch2 = new DigitalInput(1);
