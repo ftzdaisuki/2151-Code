@@ -45,15 +45,15 @@ public class Robot extends SampleRobot {
         while (isOperatorControl() && isEnabled()) {
         	boolean buttonLower = gamePad.getRawButton(6); //for lowering the arms
         	boolean buttonRaise = gamePad.getRawButton(5); //or raising them    	
-        	double leftSide = gamePad.getRawAxis(1) * .5; //50% power
-        	double rightSide = gamePad.getRawAxis(2) * .5; //otherwise we move insanely too fast
+        	double leftSide = gamePad.getRawAxis(1) * .60; //50% power
+        	double rightSide = gamePad.getRawAxis(2) * .60; //otherwise we move insanely too fast
         	double range = ultra.getRangeInches();
 
         	
         	while (buttonLower && limitSwitch2.get()) { //entering loops for raising and lowering arms
         		relayArms.set(Relay.Value.kForward);
-        		leftSide = gamePad.getRawAxis(1) * .50;
-            	rightSide = gamePad.getRawAxis(2) * .50;
+        		leftSide = gamePad.getRawAxis(1) * .60;
+            	rightSide = gamePad.getRawAxis(2) * .60;
             	Drive.arcadeDrive(-leftSide, -rightSide, true);
             	buttonLower = gamePad.getRawButton(6);
             	Timer.delay(0.001);
@@ -61,8 +61,8 @@ public class Robot extends SampleRobot {
         	
         	while (buttonRaise && limitSwitch1.get()) {
         		relayArms.set(Relay.Value.kReverse); //or raise them
-            	leftSide = gamePad.getRawAxis(1) * .50; 
-            	rightSide = gamePad.getRawAxis(2) * .50;
+            	leftSide = gamePad.getRawAxis(1) * .60; 
+            	rightSide = gamePad.getRawAxis(2) * .60;
             	Drive.arcadeDrive(-leftSide, -rightSide, true); 
             	buttonRaise = gamePad.getRawButton(5); 
             	Timer.delay(0.001);
