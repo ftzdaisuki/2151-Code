@@ -46,11 +46,11 @@ public class Robot extends SampleRobot {
         Drive.setSafetyEnabled(true);
         
         while (isOperatorControl() && isEnabled()) {
-        	boolean buttonLower = gamePad.getRawButton(6); //for lowering the arms
-        	boolean buttonRaise = gamePad.getRawButton(5); //or raising them  
-        	boolean armsClose = gamePad.getRawButton(8); //for closing the arms
-        	boolean armsOpen = gamePad.getRawButton(7); //for opening them up again
-        	double leftSide = gamePad.getRawAxis(1) * .60; //50% power
+        	boolean buttonClose = gamePad.getRawButton(6); //for lowering the arms
+        	boolean buttonOpen = gamePad.getRawButton(5); //or raising them  
+        	boolean armsLower = gamePad.getRawButton(8); //for closing the arms
+        	boolean armsRaise = gamePad.getRawButton(7); //for opening them up again
+        	double leftSide = gamePad.getRawAxis(1) * .60; //60% power
         	double rightSide = gamePad.getRawAxis(2) * .60; //otherwise we move insanely too fast
         	double range = ultra.getRangeInches();
         	
@@ -59,26 +59,32 @@ public class Robot extends SampleRobot {
         		
         	}
         	*/
-        	while (buttonLower && limitSwitch2.get()) { //entering loops for raising and lowering arms
+        	while (buttonClose && limitSwitch2.get()) { //entering loops for raising and lowering arms
         		relayArms.set(Relay.Value.kForward);
         		leftSide = gamePad.getRawAxis(1) * .60;
             	rightSide = gamePad.getRawAxis(2) * .60;
             	Drive.arcadeDrive(-leftSide, -rightSide, true);
-            	buttonLower = gamePad.getRawButton(6);
+            	buttonClose = gamePad.getRawButton(6);
             	Timer.delay(0.001);
         	}
         	
-        	while (buttonRaise && limitSwitch1.get()) {
+        	while (buttonOpen && limitSwitch1.get()) {
         		relayArms.set(Relay.Value.kReverse); //or raise them
             	leftSide = gamePad.getRawAxis(1) * .60; 
             	rightSide = gamePad.getRawAxis(2) * .60;
             	Drive.arcadeDrive(-leftSide, -rightSide, true); 
-            	buttonRaise = gamePad.getRawButton(5); 
+            	buttonOpen = gamePad.getRawButton(5); 
             	Timer.delay(0.001);
         	}
 			
         	
-        	
+        	SmartDashboard.putNumber("Distance to Nearest Object", range);
+        	SmartDashboard.putBoolean("Opening?", buttonOpen);
+        	SmartDashboard.putBoolean("Or closing?", buttonClose);
+            SmartDashboard.putBoolean("Raising?", armsRaise);
+            SmartDashboard.putBoolean("Or lowering?", armsLower);
+        	SmartDashboard.putBoolean("Limit switch 1 hit", limitSwitch1.get());
+        	SmartDashboard.putBoolean("Limit Switch 2 hit",  limitSwitch2.get());        	
         	relayArms.set(Relay.Value.kOff); //we were missing these commands and got very confused when the relays stuck on
         	Drive.arcadeDrive(-leftSide, -rightSide, true); //negated because it's backwards
             Timer.delay(0.001);		//1ms delay for very fast updating (now watch as we run out of memory)
