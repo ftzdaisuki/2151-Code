@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Ultrasonic;
 import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import org.usfirst.frc.team2151.robot.Move;
 
 //to change the motor power: find gamePad.getRawAxis and edit the multiplying value.
 //do this for all getRawAxis values. Be consistent!
@@ -54,26 +55,19 @@ public class Robot extends SampleRobot {
         	
         	while (buttonLower && limitSwitch2.get()) { //entering loops for raising and lowering arms
         		relayArms.set(Relay.Value.kForward);
-        		leftSide = gamePad.getRawAxis(1) * .60;
-            	rightSide = gamePad.getRawAxis(2) * .60;
-            	Drive.arcadeDrive(-leftSide, -rightSide, true);
-            	buttonLower = gamePad.getRawButton(6);
+        		Move.botDrive();
             	Timer.delay(0.001);
         	}
         	
         	while (buttonRaise && limitSwitch1.get()) {
         		relayArms.set(Relay.Value.kReverse); //or raise them
-            	leftSide = gamePad.getRawAxis(1) * .60; 
-            	rightSide = gamePad.getRawAxis(2) * .60;
-            	Drive.arcadeDrive(-leftSide, -rightSide, true); 
-            	buttonRaise = gamePad.getRawButton(5); 
+            	Move.botDrive();
             	Timer.delay(0.001);
         	}
 			
         	
-        	
+        	Move.botDrive();
         	relayArms.set(Relay.Value.kOff); //we were missing these commands and got very confused when the relays stuck on
-        	Drive.arcadeDrive(-leftSide, -rightSide, true); //negated because it's backwards
             Timer.delay(0.001);		//1ms delay for very fast updating (now watch as we run out of memory)
         }
     }
