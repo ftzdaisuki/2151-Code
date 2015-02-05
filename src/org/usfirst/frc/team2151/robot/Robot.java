@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 //to change the motor power: find gamePad.getRawAxis and edit the multiplying value.
 //do this for all getRawAxis values. Be consistent!
 
+
 public class Robot extends SampleRobot {
     RobotDrive Drive;//The first set of Talons.
     Joystick gamePad; //our gamepad! wooo.
@@ -22,6 +23,7 @@ public class Robot extends SampleRobot {
     DigitalInput limitSwitch1;
     DigitalInput limitSwitch2;
     Ultrasonic ultra;
+    
     
     public Robot() {
         Drive = new RobotDrive(0, 1, 2, 3);
@@ -37,10 +39,14 @@ public class Robot extends SampleRobot {
         ultra.setAutomaticMode(true);
         
         
+        
     }
     /* Not 100% sure what to do with this line here:
       ultra = new Ultrasonic(ULTRASONIC_PING, ULTRASONIC_ECHO);
     */
+    
+    
+    
     
       public void operatorControl() {
         Drive.setSafetyEnabled(true);
@@ -86,12 +92,9 @@ public class Robot extends SampleRobot {
         	SmartDashboard.putBoolean("Limit switch 1 hit", limitSwitch1.get());
         	SmartDashboard.putBoolean("Limit Switch 2 hit",  limitSwitch2.get());        	
         	relayArms.set(Relay.Value.kOff); //we were missing these commands and got very confused when the relays stuck on
-        	Drive.arcadeDrive(-leftSide, -rightSide, true); //negated because it's backwards
+        	Drive.arcadeDrive(-leftSide, -rightSide);
             Timer.delay(0.001);		//1ms delay for very fast updating (now watch as we run out of memory)
         }
     }
 }
-   
-
-
-	
+//This comment is to bring the program to 100 lines.
