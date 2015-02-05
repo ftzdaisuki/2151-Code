@@ -18,7 +18,7 @@ public class Robot extends SampleRobot {
     RobotDrive Drive;//The first set of Talons.
     Joystick gamePad; //our gamepad! wooo.
     Relay relayArms; //opening and closing the arms
-    Victor armsLift; //the grabby bit
+    Victor armsLift; //lifting said arms
     DigitalInput limitSwitch1;
     DigitalInput limitSwitch2;
     Ultrasonic ultra;
@@ -30,7 +30,7 @@ public class Robot extends SampleRobot {
         armsLift = new Victor(4);
         gamePad = new Joystick(0); //init code
         limitSwitch1 = new DigitalInput(0);
-        limitSwitch2 = new DigitalInput(1);
+        limitSwitch2 = new DigitalInput(1);	
         ultra = new Ultrasonic(3,4); //these ports are just used as placeholders. Change to (ULTRASONIC_ECHO_PULSE_OUTPUT, ULTRASONIC_TRIGGER_PULSE_INPUT)
         ultra.setEnabled(true);
         ultra.setAutomaticMode(true);
@@ -45,36 +45,40 @@ public class Robot extends SampleRobot {
         Drive.setSafetyEnabled(true);
         
         while (isOperatorControl() && isEnabled()) {
-        	boolean buttonLower = gamePad.getRawButton(6); //for lowering the arms
-        	boolean buttonRaise = gamePad.getRawButton(5); //or raising them    	
-        	double leftSide = gamePad.getRawAxis(1) * .60; //50% power
+        	boolean buttonClose = gamePad.getRawButton(6); //for lowering the arms
+        	boolean buttonOpen = gamePad.getRawButton(5); //or raising them    	
+        	double leftSide = gamePad.getRawAxis(1) * .60; //60% power
         	double rightSide = gamePad.getRawAxis(2) * .60; //otherwise we move insanely too fast
         	double range = ultra.getRangeInches();
 
         	
-        	while (buttonLower && limitSwitch2.get()) { //entering loops for raising and lowering arms
+        	while (buttonClose && limitSwitch2.get()) { //entering loops for raising and lowering arms
         		relayArms.set(Relay.Value.kForward);
         		leftSide = gamePad.getRawAxis(1) * .60;
             	rightSide = gamePad.getRawAxis(2) * .60;
             	Drive.arcadeDrive(-leftSide, -rightSide, true);
-            	buttonLower = gamePad.getRawButton(6);
-            	Timer.delay(0.001);
+            	buttonClose = gamePad.getRawButton(6);
+            	Timer.delay(0.0001);
         	}
         	
-        	while (buttonRaise && limitSwitch1.get()) {
+        	while (buttonOpen && limitSwitch1.get()) {
         		relayArms.set(Relay.Value.kReverse); //or raise them
             	leftSide = gamePad.getRawAxis(1) * .60; 
             	rightSide = gamePad.getRawAxis(2) * .60;
             	Drive.arcadeDrive(-leftSide, -rightSide, true); 
-            	buttonRaise = gamePad.getRawButton(5); 
-            	Timer.delay(0.001);
+            	buttonOpen = gamePad.getRawButton(5); 
+            	Timer.delay(0.0001);
         	}
 			
         	
-        	
+        	SmartDashboard.putNumber("Ultrasonic range to nearest tote", range);
+        	SmartDashboard.putBoolean("Closing?", buttonClose);
+        	SmartDashboard.putBoolean("Opening?", buttonOpen);
+        	SmartDashboard.putBoolean("Limit 1", limitSwitch1.get());
+        	SmartDashboard.putBoolean("Limit 2", limitSwitch2.get());
         	relayArms.set(Relay.Value.kOff); //we were missing these commands and got very confused when the relays stuck on
         	Drive.arcadeDrive(-leftSide, -rightSide, true); //negated because it's backwards
-            Timer.delay(0.001);		//1ms delay for very fast updating (now watch as we run out of memory)
+            Timer.delay(0.0001);		//0.1ms delay for very fast updating (now watch as our CPU usage spikes)
         }
     }
 }
