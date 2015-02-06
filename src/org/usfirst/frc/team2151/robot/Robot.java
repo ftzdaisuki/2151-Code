@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Ultrasonic;
+import edu.wpi.first.wpilibj.Ultrasonic.Unit;
 import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -23,7 +24,7 @@ public class Robot extends SampleRobot {
     DigitalInput limitSwitch1;
     DigitalInput limitSwitch2;
     Ultrasonic ultra;
-    
+    Unit kInches;
     
     public Robot() {
         Drive = new RobotDrive(0, 1, 2, 3);
@@ -33,7 +34,7 @@ public class Robot extends SampleRobot {
         gamePad = new Joystick(0); //init code
         limitSwitch1 = new DigitalInput(0);
         limitSwitch2 = new DigitalInput(1);
-        ultra = new Ultrasonic(6,5); //these ports are just used as placeholders. 
+		ultra = new Ultrasonic(6,5,kInches); //these ports are just used as placeholders. 
         //Change to (ULTRASONIC_ECHO_PULSE_OUTPUT, ULTRASONIC_TRIGGER_PULSE_INPUT)
         ultra.setEnabled(true);
         ultra.setAutomaticMode(true);
