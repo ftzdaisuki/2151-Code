@@ -56,6 +56,8 @@ public class Robot extends SampleRobot {
         	boolean buttonOpen = gamePad.getRawButton(5); //or raising them  
         	boolean armsLower = gamePad.getRawButton(8); //for closing the arms
         	boolean armsRaise = gamePad.getRawButton(7); //for opening them up again
+        	boolean limit1 = limitSwitch1.get();
+        	boolean limit2 = limitSwitch2.get();
         	double leftSide = gamePad.getRawAxis(1) * .60; //60% power
         	double rightSide = gamePad.getRawAxis(2) * .60; //otherwise we move insanely too fast
         	double range = ultra.getRangeInches();
@@ -65,16 +67,14 @@ public class Robot extends SampleRobot {
         		
         	}
         	*/
-        	if (buttonClose && limitSwitch2.get()) { //entering loops for raising and lowering arms
+        	if (buttonClose && limit2) { //entering loops for raising and lowering arms
         		relayArms.set(Relay.Value.kForward);
         	}
-        	
-        	if (buttonOpen && limitSwitch1.get()) {
+        	else if (buttonOpen && limit1) {
         		relayArms.set(Relay.Value.kReverse); //or raise them
         	}
-        	if (!buttonOpen && !buttonClose)
-        	{
-        		relayArms.set(Relay.Value.kOff);        		
+        	else {
+        		relayArms.set(Relay.Value.kOff);
         	}
         	SmartDashboard.putNumber("Distance to Nearest Object", range);
         	SmartDashboard.putBoolean("Opening?", buttonOpen);
@@ -89,4 +89,3 @@ public class Robot extends SampleRobot {
       }
     }
 }
-//This comment is to bring the program to 100 lines.
