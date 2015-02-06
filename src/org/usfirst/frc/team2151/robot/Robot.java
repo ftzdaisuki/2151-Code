@@ -65,25 +65,17 @@ public class Robot extends SampleRobot {
         		
         	}
         	*/
-        	while (buttonClose && limitSwitch2.get()) { //entering loops for raising and lowering arms
+        	if (buttonClose && limitSwitch2.get()) { //entering loops for raising and lowering arms
         		relayArms.set(Relay.Value.kForward);
-        		leftSide = gamePad.getRawAxis(1) * .60;
-            	rightSide = gamePad.getRawAxis(2) * .60;
-            	Drive.arcadeDrive(-leftSide, -rightSide, true);
-            	buttonClose = gamePad.getRawButton(6);
-            	Timer.delay(0.001);
         	}
         	
-        	while (buttonOpen && limitSwitch1.get()) {
+        	if (buttonOpen && limitSwitch1.get()) {
         		relayArms.set(Relay.Value.kReverse); //or raise them
-            	leftSide = gamePad.getRawAxis(1) * .60; 
-            	rightSide = gamePad.getRawAxis(2) * .60;
-            	Drive.arcadeDrive(-leftSide, -rightSide, true); 
-            	buttonOpen = gamePad.getRawButton(5); 
-            	Timer.delay(0.001);
         	}
-			
-        	
+        	if (!buttonOpen && !buttonClose)
+        	{
+        		relayArms.set(Relay.Value.kOff);        		
+        	}
         	SmartDashboard.putNumber("Distance to Nearest Object", range);
         	SmartDashboard.putBoolean("Opening?", buttonOpen);
         	SmartDashboard.putBoolean("Or closing?", buttonClose);
@@ -91,10 +83,10 @@ public class Robot extends SampleRobot {
             SmartDashboard.putBoolean("Or lowering?", armsLower);
         	SmartDashboard.putBoolean("Limit switch 1 hit", limitSwitch1.get());
         	SmartDashboard.putBoolean("Limit Switch 2 hit",  limitSwitch2.get());        	
-        	relayArms.set(Relay.Value.kOff); //we were missing these commands and got very confused when the relays stuck on
-        	Drive.arcadeDrive(-leftSide, -rightSide);
+            Drive.arcadeDrive(-leftSide, -rightSide);
             Timer.delay(0.001);		//1ms delay for very fast updating (now watch as we run out of memory)
-        }
+            
+      }
     }
 }
 //This comment is to bring the program to 100 lines.
