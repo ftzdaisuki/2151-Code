@@ -81,8 +81,8 @@ public class Robot extends SampleRobot {
         	SmartDashboard.putBoolean("Or closing?", buttonClose);
             SmartDashboard.putBoolean("Raising?", armsRaise);
             SmartDashboard.putBoolean("Or lowering?", armsLower);
-        	SmartDashboard.putBoolean("Limit switch 1 hit", limitSwitch1.get());
-        	SmartDashboard.putBoolean("Limit Switch 2 hit",  limitSwitch2.get());        	
+        	SmartDashboard.putBoolean("Limit switch 1 open", limitSwitch1.get());
+        	SmartDashboard.putBoolean("Limit Switch 2 open",  limitSwitch2.get());        	
             Drive.arcadeDrive(-leftSide, -rightSide);
             Timer.delay(0.001);		//1ms delay for very fast updating (now watch as we run out of memory)
             
