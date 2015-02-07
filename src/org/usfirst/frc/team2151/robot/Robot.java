@@ -51,6 +51,8 @@ public class Robot extends SampleRobot {
     Victor armsLift; //the grabby bit
     DigitalInput limitSwitch1;
     DigitalInput limitSwitch2;
+    DigitalInput limitSwitch3;
+    DigitalInput limitSwitch4;
     Ultrasonic ultra;
     Unit kInches;
     
@@ -62,6 +64,8 @@ public class Robot extends SampleRobot {
         gamePad = new Joystick(0); //init code
         limitSwitch1 = new DigitalInput(0);
         limitSwitch2 = new DigitalInput(1);
+        limitSwitch3 = new DigitalInput(2);
+        limitSwitch4 = new DigitalInput(3);        
 		ultra = new Ultrasonic(6,5,kInches); //these ports are just used as placeholders. 
         //Change to (ULTRASONIC_ECHO_PULSE_OUTPUT, ULTRASONIC_TRIGGER_PULSE_INPUT)
         ultra.setEnabled(true);
@@ -87,6 +91,8 @@ public class Robot extends SampleRobot {
         	boolean armsRaise = gamePad.getRawButton(7); //for opening them up again
         	boolean limit1 = limitSwitch1.get();
         	boolean limit2 = limitSwitch2.get();
+            boolean limit3 = limitSwitch3.get();
+            boolean limit4 = limitSwitch4.get();
         	double leftSide = gamePad.getRawAxis(1) * .60; //60% power
         	double rightSide = gamePad.getRawAxis(2) * .60; //otherwise we move insanely too fast
         	double range = ultra.getRangeInches();
@@ -102,9 +108,9 @@ public class Robot extends SampleRobot {
 
         	else 							relayArms.set(Relay.Value.kOff);
         	
-        	if (armsRaise)					armsLift.set(0.5);
+        	if (armsRaise && limit3)		armsLift.set(0.5);
         	
-        	else if (armsLower) 			armsLift.set(-0.5);
+        	else if (armsLower && limit4) 	armsLift.set(-0.5);
         	
         	else 							armsLift.set(0);
         	
