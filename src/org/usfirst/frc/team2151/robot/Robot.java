@@ -16,6 +16,34 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 //do this for all getRawAxis values. Be consistent!
 
 
+class Class {
+	Relay relayArms;
+	Victor armsLift;
+	Joystick gamePad;
+	DigitalInput limit1;
+	DigitalInput limit2;
+	
+	public void TestInit() {
+		relayArms = new Relay(0);
+		armsLift = new Victor(4);
+		gamePad = new Joystick(0);
+		limit1 = new DigitalInput(0);
+		limit2 = new DigitalInput(1);
+	}
+	
+	public void TestClose() {
+		relayArms.set(Relay.Value.kForward);
+	}
+	public void TestOpen() {
+		relayArms.set(Relay.Value.kReverse);
+	}
+	//One of our mentors insisted on having some code in a class. 
+	//We tried this. It failed.
+	//That, and it's not worth the hassle considering what we want the class to do.
+}
+
+
+
 public class Robot extends SampleRobot {
     RobotDrive Drive;//The first set of Talons.
     Joystick gamePad; //our gamepad! wooo.
@@ -68,24 +96,29 @@ public class Robot extends SampleRobot {
         		
         	}
         	*/
-        	if (buttonClose && limit2) { //entering loops for raising and lowering arms
-        		relayArms.set(Relay.Value.kForward);
-        	}
-        	else if (buttonOpen && limit1) {
-        		relayArms.set(Relay.Value.kReverse); //or raise them
-        	}
-        	else {
-        		relayArms.set(Relay.Value.kOff);
-        	}
+        	if (buttonClose && limit2) 		relayArms.set(Relay.Value.kForward);
+
+        	else if (buttonOpen && limit1)  relayArms.set(Relay.Value.kReverse); 
+
+        	else 							relayArms.set(Relay.Value.kOff);
+        	
+        	if (armsRaise)					armsLift.set(0.5);
+        	
+        	else if (armsLower) 			armsLift.set(-0.5);
+        	
+        	else 							armsLift.set(0);
+        	
+        	//Above commands tab-spaced for (hopefully) readability.
+        	
         	SmartDashboard.putNumber("Distance to Nearest Object", range);
         	SmartDashboard.putBoolean("Opening?", buttonOpen);
         	SmartDashboard.putBoolean("Or closing?", buttonClose);
             SmartDashboard.putBoolean("Raising?", armsRaise);
             SmartDashboard.putBoolean("Or lowering?", armsLower);
         	SmartDashboard.putBoolean("Limit switch 1 open", limitSwitch1.get());
-        	SmartDashboard.putBoolean("Limit Switch 2 open",  limitSwitch2.get());        	
+        	SmartDashboard.putBoolean("Limit Switch 2 open",  limitSwitch2.get());  //Spitting stuff out to SmartDashboard.     	
             Drive.arcadeDrive(-leftSide, -rightSide);
-            Timer.delay(0.001);		//1ms delay for very fast updating (now watch as we run out of memory)
+            Timer.delay(0.001);		//1ms delay for very fast updating (now watch our CPU cook an egg!)
             
       }
     }
