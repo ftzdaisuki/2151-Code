@@ -16,30 +16,32 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 //do this for all getRawAxis values. Be consistent!
 
 
-class Class {
-	Relay relayArms;
+class ttClass {
 	Victor armsLift;
 	Joystick gamePad;
 	DigitalInput limit1;
 	DigitalInput limit2;
 	
 	public void TestInit() {
-		relayArms = new Relay(0);
 		armsLift = new Victor(4);
 		gamePad = new Joystick(0);
 		limit1 = new DigitalInput(0);
 		limit2 = new DigitalInput(1);
 	}
 	
-	public void TestClose() {
+	public static void TestClose(Relay relayArms) {
+		
 		relayArms.set(Relay.Value.kForward);
 	}
-	public void TestOpen() {
+	public static void TestOpen(Relay relayArms) {
 		relayArms.set(Relay.Value.kReverse);
 	}
-	//One of our mentors insisted on having some code in a class. 
-	//We tried this. It failed.
-	//That, and it's not worth the hassle considering what we want the class to do.
+	public void TestLower() {
+		armsLift.set(0.5);
+	}
+	public void TestRaise(){
+		armsLift.set(0.5);
+	}
 }
 
 
@@ -47,7 +49,7 @@ class Class {
 public class Robot extends SampleRobot {
     RobotDrive Drive;//The first set of Talons.
     Joystick gamePad; //our gamepad! wooo.
-    Relay relayArms; //opening and closing the arms
+   
     Victor armsLift; //the grabby bit
     DigitalInput limitSwitch1;
     DigitalInput limitSwitch2;
@@ -59,7 +61,7 @@ public class Robot extends SampleRobot {
     public Robot() {
         Drive = new RobotDrive(0, 1, 2, 3);
         Drive.setExpiration(0.1);
-        relayArms = new Relay(0);
+       
         armsLift = new Victor(4);
         gamePad = new Joystick(0); //init code
         limitSwitch1 = new DigitalInput(0);
@@ -83,7 +85,7 @@ public class Robot extends SampleRobot {
     
       public void operatorControl() {
         Drive.setSafetyEnabled(true);
-        
+        Relay relayArms = new Relay(0);
         while (isOperatorControl() && isEnabled()) {
         	boolean buttonClose = gamePad.getRawButton(6); //for lowering the arms
         	boolean buttonOpen = gamePad.getRawButton(5); //or raising them  
@@ -102,10 +104,10 @@ public class Robot extends SampleRobot {
         		
         	}
         	*/
-        	if (buttonClose && limit2) 		relayArms.set(Relay.Value.kForward);
+        	if (buttonClose && limit2) 		ttClass.TestClose(relayArms);
 
-        	else if (buttonOpen && limit1)  relayArms.set(Relay.Value.kReverse); 
-
+        	else if (buttonOpen && limit1)  ttClass.TestOpen(relayArms);
+        	
         	else 							relayArms.set(Relay.Value.kOff);
         	
         	if (armsRaise && limit3)		armsLift.set(0.5);
@@ -114,7 +116,7 @@ public class Robot extends SampleRobot {
         	
         	else 							armsLift.set(0);
         	
-        	//Above commands tab-spaced for (hopefully) readability.
+        	//Above commands tab-spaced for readability (hopefully).
         	
         	SmartDashboard.putNumber("Distance to Nearest Object", range);
         	SmartDashboard.putBoolean("Opening?", buttonOpen);
