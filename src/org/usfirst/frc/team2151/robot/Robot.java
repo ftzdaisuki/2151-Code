@@ -34,6 +34,7 @@ class ttClass {
 		relayArms.set(Relay.Value.kForward);
 	}
 	public static void TestOpen(Relay relayArms) {
+		
 		relayArms.set(Relay.Value.kReverse);
 	}
 	public void TestLower() {
@@ -49,7 +50,7 @@ class ttClass {
 public class Robot extends SampleRobot {
     RobotDrive Drive;//The first set of Talons.
     Joystick gamePad; //our gamepad! wooo.
-   
+    Relay relayArms;
     Victor armsLift; //the grabby bit
     DigitalInput limitSwitch1;
     DigitalInput limitSwitch2;
@@ -61,7 +62,7 @@ public class Robot extends SampleRobot {
     public Robot() {
         Drive = new RobotDrive(0, 1, 2, 3);
         Drive.setExpiration(0.1);
-       
+        relayArms = new Relay(0);
         armsLift = new Victor(4);
         gamePad = new Joystick(0); //init code
         limitSwitch1 = new DigitalInput(0);
@@ -85,7 +86,7 @@ public class Robot extends SampleRobot {
     
       public void operatorControl() {
         Drive.setSafetyEnabled(true);
-        Relay relayArms = new Relay(0);
+        
         while (isOperatorControl() && isEnabled()) {
         	boolean buttonClose = gamePad.getRawButton(6); //for lowering the arms
         	boolean buttonOpen = gamePad.getRawButton(5); //or raising them  
