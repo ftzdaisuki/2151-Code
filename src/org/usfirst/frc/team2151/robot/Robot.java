@@ -69,22 +69,13 @@ public class Robot extends SampleRobot {
         limitSwitch2 = new DigitalInput(1);
         limitSwitch3 = new DigitalInput(2);
         limitSwitch4 = new DigitalInput(3);        
-		ultra = new Ultrasonic(6,5,kInches); //these ports are just used as placeholders. 
+		ultra = new Ultrasonic(9,8,kInches); //these ports are just used as placeholders. 
         //Change to (ULTRASONIC_ECHO_PULSE_OUTPUT, ULTRASONIC_TRIGGER_PULSE_INPUT)
         ultra.setEnabled(true);
         ultra.setAutomaticMode(true);
-        
-        
-        
-    }
-    /* Not 100% sure what to do with this line here:
-      ultra = new Ultrasonic(ULTRASONIC_PING, ULTRASONIC_ECHO);
-    */
-    
-    
-    
-    
-      public void operatorControl() {
+   }
+           
+        public void operatorControl() {
         Drive.setSafetyEnabled(true);
         
         while (isOperatorControl() && isEnabled()) {
