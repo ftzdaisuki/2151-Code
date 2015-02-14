@@ -29,13 +29,13 @@ class ttClass {
 		limit2 = new DigitalInput(1);
 	}
 	
-	public static void TestClose(Relay relayArms) {
+	public static void TestClose(Victor relayArms) {
 		
-		relayArms.set(Relay.Value.kForward);
+		relayArms.set(1);
 	}
-	public static void TestOpen(Relay relayArms) {
+	public static void TestOpen(Victor relayArms) {
 		
-		relayArms.set(Relay.Value.kReverse);
+		relayArms.set(-1);
 	}
 	public void TestLower() {
 		armsLift.set(0.5);
@@ -50,7 +50,7 @@ class ttClass {
 public class Robot extends SampleRobot {
     RobotDrive Drive;//The first set of Talons.
     Joystick gamePad; //our gamepad! wooo.
-    Relay relayArms;
+    Victor relayArms;
     Victor armsLift; //the grabby bit
     DigitalInput limitSwitch1;
     DigitalInput limitSwitch2;
@@ -62,14 +62,14 @@ public class Robot extends SampleRobot {
     public Robot() {
         Drive = new RobotDrive(0, 1, 2, 3);
         Drive.setExpiration(0.1);
-        relayArms = new Relay(0);
-        armsLift = new Victor(4);
+        relayArms = new Victor(4);
+        armsLift = new Victor(5);
         gamePad = new Joystick(0); //init code
         limitSwitch1 = new DigitalInput(0);
         limitSwitch2 = new DigitalInput(1);
         limitSwitch3 = new DigitalInput(2);
         limitSwitch4 = new DigitalInput(3);        
-		ultra = new Ultrasonic(9,8,kInches); //these ports are just used as placeholders. 
+		ultra = new Ultrasonic(8,9,kInches); //these ports are just used as placeholders. 
         //Change to (ULTRASONIC_ECHO_PULSE_OUTPUT, ULTRASONIC_TRIGGER_PULSE_INPUT)
         ultra.setEnabled(true);
         ultra.setAutomaticMode(true);
@@ -88,7 +88,7 @@ public class Robot extends SampleRobot {
             boolean limit3 = limitSwitch3.get();
             boolean limit4 = limitSwitch4.get();
         	double leftSide = gamePad.getRawAxis(1) * .60; //60% power
-        	double rightSide = gamePad.getRawAxis(2) * .60; //otherwise we move insanely too fast
+        	double rightSide = gamePad.getRawAxis(2) * .40; //otherwise we move insanely too fast
         	double range = ultra.getRangeInches();
         	
         	/* toying around with the idea of using the buttons to open and close the arms
@@ -96,15 +96,15 @@ public class Robot extends SampleRobot {
         		
         	}
         	*/
-        	if (buttonClose && limit2) 		ttClass.TestClose(relayArms);
+        	if (buttonClose && limit2) 		relayArms.set(1);
 
-        	else if (buttonOpen && limit1)  ttClass.TestOpen(relayArms);
+        	else if (buttonOpen && limit1)  relayArms.set(-1);
         	
-        	else 							relayArms.set(Relay.Value.kOff);
+        	else 							relayArms.set(0);
         	
-        	if (armsRaise && limit3)		armsLift.set(0.5);
+        	if (armsRaise && limit3)		armsLift.set(1);
         	
-        	else if (armsLower && limit4) 	armsLift.set(-0.5);
+        	else if (armsLower && limit4) 	armsLift.set(-1);
         	
         	else 							armsLift.set(0);
         	
@@ -118,7 +118,7 @@ public class Robot extends SampleRobot {
         	SmartDashboard.putBoolean("Limit switch 1 open", limitSwitch1.get());
         	SmartDashboard.putBoolean("Limit Switch 2 open",  limitSwitch2.get());  //Spitting stuff out to SmartDashboard.     	
             Drive.arcadeDrive(-leftSide, -rightSide);
-            Timer.delay(0.001);		//1ms delay for very fast updating (now watch our CPU cook an egg!)
+            Timer.delay(0.0001);		//1ms delay for very fast updating (now watch our CPU cook an egg!)
             
       }
     }
