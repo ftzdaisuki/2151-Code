@@ -1,7 +1,6 @@
 package org.usfirst.frc.team2151.robot;
 
 
-import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.SampleRobot;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.Joystick;
@@ -59,11 +58,12 @@ public class Robot extends SampleRobot {
     Ultrasonic ultra;
     Unit kInches;
     
+    
     public Robot() {
         Drive = new RobotDrive(0, 1, 2, 3);
         Drive.setExpiration(0.1);
-        relayArms = new Victor(4);
-        armsLift = new Victor(5);
+        relayArms = new Victor(5);
+        armsLift = new Victor(4);
         gamePad = new Joystick(0); //init code
         limitSwitch1 = new DigitalInput(0);
         limitSwitch2 = new DigitalInput(1);
@@ -96,15 +96,15 @@ public class Robot extends SampleRobot {
         		
         	}
         	*/
-        	if (buttonClose && limit2) 		relayArms.set(1);
+        	if (buttonClose && limit2) 		relayArms.set(.25);
 
-        	else if (buttonOpen && limit1)  relayArms.set(-1);
+        	else if (buttonOpen && limit1 && range < 28)  relayArms.set(-.25);
         	
         	else 							relayArms.set(0);
         	
-        	if (armsRaise && limit3)		armsLift.set(1);
+        	if (armsRaise && limit3)		armsLift.set(-.8);
         	
-        	else if (armsLower && limit4) 	armsLift.set(-1);
+        	else if (armsLower && limit4) 	armsLift.set(.1);
         	
         	else 							armsLift.set(0);
         	
@@ -118,7 +118,7 @@ public class Robot extends SampleRobot {
         	SmartDashboard.putBoolean("Limit switch 1 open", limitSwitch1.get());
         	SmartDashboard.putBoolean("Limit Switch 2 open",  limitSwitch2.get());  //Spitting stuff out to SmartDashboard.     	
             Drive.arcadeDrive(-leftSide, -rightSide);
-            Timer.delay(0.0001);		//1ms delay for very fast updating (now watch our CPU cook an egg!)
+            Timer.delay(0.001);		//1ms delay for very fast updating (now watch our CPU cook an egg!)
             
       }
     }
