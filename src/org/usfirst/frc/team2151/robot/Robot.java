@@ -16,30 +16,17 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 
 class ttClass {
-	Victor armsLift;
-	Joystick gamePad;
-	DigitalInput limit1;
-	DigitalInput limit2;
-	
-	public void TestInit() {
-		armsLift = new Victor(4);
-		gamePad = new Joystick(0);
-		limit1 = new DigitalInput(0);
-		limit2 = new DigitalInput(1);
-	}
 	
 	public static void TestClose(Victor relayArms) {
-		
 		relayArms.set(1);
 	}
 	public static void TestOpen(Victor relayArms) {
-		
 		relayArms.set(-1);
 	}
-	public void TestLower() {
+	public void TestLower(Victor armsLift) {
 		armsLift.set(0.5);
 	}
-	public void TestRaise(){
+	public void TestRaise(Victor armsLift){
 		armsLift.set(0.5);
 	}
 }
