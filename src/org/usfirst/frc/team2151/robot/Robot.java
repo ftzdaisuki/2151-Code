@@ -47,16 +47,16 @@ class ttClass {
 
 
 public class Robot extends SampleRobot {
-    RobotDrive Drive;//The first set of Talons.
+    RobotDrive Drive;//Talons.
     Joystick gamePad; //our gamepad! wooo.
-    Victor relayArms;
-    Victor armsLift; //the grabby bit
+    Victor relayArms; //grabbing mech
+    Victor armsLift; //lifting mech
     DigitalInput limitSwitch1;
     DigitalInput limitSwitch2;
     DigitalInput limitSwitch3;
-    DigitalInput limitSwitch4;
-    Ultrasonic ultra;
-    Unit kInches;
+    DigitalInput limitSwitch4; //4 limit switches (some may be unused)
+    Ultrasonic ultra; //ultrasonic rangefinder
+    Unit kInches; //why do we need this?
     
     
     public Robot() {
@@ -69,8 +69,7 @@ public class Robot extends SampleRobot {
         limitSwitch2 = new DigitalInput(1);
         limitSwitch3 = new DigitalInput(2);
         limitSwitch4 = new DigitalInput(3);        
-		ultra = new Ultrasonic(8,9,kInches); //these ports are just used as placeholders. 
-        //Change to (ULTRASONIC_ECHO_PULSE_OUTPUT, ULTRASONIC_TRIGGER_PULSE_INPUT)
+		ultra = new Ultrasonic(8,9,kInches);
         ultra.setEnabled(true);
         ultra.setAutomaticMode(true);
    }
@@ -91,11 +90,6 @@ public class Robot extends SampleRobot {
         	double rightSide = gamePad.getRawAxis(2) * .40; //otherwise we move insanely too fast
         	double range = ultra.getRangeInches();
         	
-        	/* toying around with the idea of using the buttons to open and close the arms
-        	   while (armsClose && range < 2) {
-        		
-        	}
-        	*/
         	if (buttonClose && limit2) 		relayArms.set(.25);
 
         	else if (buttonOpen && limit1 && range < 28)  relayArms.set(-.25);
