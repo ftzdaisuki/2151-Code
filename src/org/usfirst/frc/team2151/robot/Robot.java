@@ -77,9 +77,9 @@ public class Robot extends SampleRobot {
         	double rightSide = gamePad.getRawAxis(2) * .40; //otherwise we move insanely too fast
         	double range = ultra.getRangeInches();
         	
-        	if (buttonClose && limit2) 		relayArms.set(.5);
+        	if (buttonClose && limit2) 		relayArms.set(.75);
 
-        	else if (buttonOpen && limit1 && range < 28)  relayArms.set(-.5);
+        	else if (buttonOpen && limit1 && range < 28)  relayArms.set(-.75);
         	
         	else 							relayArms.set(0);
         	
