@@ -77,18 +77,18 @@ public class Robot extends SampleRobot {
         	double rightSide = gamePad.getRawAxis(2) * .40; //otherwise we move insanely too fast
         	double range = ultra.getRangeInches();
         	
-        	if (buttonClose && limit2) 		relayArms.set(.75);
+        	if (buttonClose && limit2) 		relayArms.set(.8);
 
-        	else if (buttonOpen && limit1 && range < 28)  relayArms.set(-.75);
+        	else if (buttonOpen && limit1 && range < 28)  relayArms.set(-.8);
         	
         	else 							relayArms.set(0);
         	
-        	if (armsRaise && limit3)		armsLift.set(-.8);
+        	if (armsRaise && limit3)		armsLift.set(-1);
         	
         	else if (armsLower && limit4) 	armsLift.set(.1);
         	
-        	else 							armsLift.set(0);
-        	
+        	else if (gamePad.getRawButton(1))    armsLift.set(-.2);
+        	else armsLift.set(0);
         	//Above commands tab-spaced for readability (hopefully).
         	
         	SmartDashboard.putNumber("Distance to Nearest Object", range);
