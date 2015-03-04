@@ -14,27 +14,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 //to change the motor power: find gamePad.getRawAxis and edit the multiplying value.
 //do this for all getRawAxis values. Be consistent!
 
-
-class ttClass {
-	
-	public static void TestClose(Victor relayArms) {
-		relayArms.set(1);
-	}
-	public static void TestOpen(Victor relayArms) {
-		relayArms.set(-1);
-	}
-	public void TestLower(Victor armsLift) {
-		armsLift.set(0.5);
-	}
-	public void TestRaise(Victor armsLift){
-		armsLift.set(0.5);
-	}
-}
-
-
-
 public class Robot extends SampleRobot {
-    RobotDrive Drive;//Talons.
+    RobotDrive Drive; //Talons.
     Joystick gamePad; //our gamepad! wooo.
     Victor relayArms; //grabbing mech
     Victor armsLift; //lifting mech
