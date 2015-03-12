@@ -48,8 +48,8 @@ public class Robot extends SampleRobot {
         while (isOperatorControl() && isEnabled()) {
         	boolean buttonClose = gamePad.getRawButton(6); //for lowering the arms
         	boolean buttonOpen = gamePad.getRawButton(5); //or raising them  
-        	boolean armsLower = gamePad.getRawButton(8); //for closing the arms
-        	boolean armsRaise = gamePad.getRawButton(7); //for opening them up again
+        	double armsLower = gamePad.getRawAxis(2); //for closing the arms
+        	double armsRaise = gamePad.getRawAxis(3); //for opening them up again
         	boolean limit1 = limitSwitch1.get();
         	boolean limit2 = limitSwitch2.get();
             boolean limit3 = limitSwitch3.get();
@@ -64,11 +64,11 @@ public class Robot extends SampleRobot {
         	
         	else 							relayArms.set(0);
         	
-        	if (armsRaise && limit3)		armsLift.set(-1);
+        	if (limit3)		armsLift.set(-armsRaise);
         	
-        	else if (armsLower && limit4) 	armsLift.set(.1);
+        	else if (limit4) 	armsLift.set(armsLower * .1);
         	
-        	else if (gamePad.getRawButton(1))    armsLift.set(-.2);
+        	else if (armsRaise < 20 && armsLower < 20 && gamePad.getRawButton(1))    armsLift.set(-.2);
         	
         	else armsLift.set(0);
         	//Above commands tab-spaced for readability (hopefully).
@@ -76,8 +76,6 @@ public class Robot extends SampleRobot {
         	SmartDashboard.putNumber("Distance to Nearest Object", range);
         	SmartDashboard.putBoolean("Opening?", buttonOpen);
         	SmartDashboard.putBoolean("Or closing?", buttonClose);
-            SmartDashboard.putBoolean("Raising?", armsRaise);
-            SmartDashboard.putBoolean("Or lowering?", armsLower);
         	SmartDashboard.putBoolean("Limit switch 1 open", limitSwitch1.get());
         	SmartDashboard.putBoolean("Limit Switch 2 open",  limitSwitch2.get());  //Spitting stuff out to SmartDashboard.     	
             Drive.arcadeDrive(-leftSide, -rightSide);
