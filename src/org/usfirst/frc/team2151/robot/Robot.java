@@ -55,7 +55,7 @@ public class Robot extends SampleRobot {
             boolean limit3 = limitSwitch3.get();
             boolean limit4 = limitSwitch4.get();
         	double leftSide = gamePad.getRawAxis(1) * .60; //40% power
-        	double rightSide = gamePad.getRawAxis(2) * .40; //otherwise we move insanely too fast
+        	double rightSide = gamePad.getRawAxis(4) * .40; //otherwise we move insanely too fast
         	double range = ultra.getRangeInches();
         	
         	if (buttonClose && limit2) 		relayArms.set(.5);//arms closing
