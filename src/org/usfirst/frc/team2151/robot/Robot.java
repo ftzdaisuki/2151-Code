@@ -60,7 +60,7 @@ public class Robot extends SampleRobot {
         	
         	if (buttonClose && limit2) 		relayArms.set(.8);
 
-        	else if (buttonOpen && limit1 && range < 28)  relayArms.set(-.8);
+        	else if (buttonOpen && limit1)  relayArms.set(-.8);
         	
         	else 							relayArms.set(0);
         	
@@ -69,6 +69,7 @@ public class Robot extends SampleRobot {
         	else if (armsLower && limit4) 	armsLift.set(.1);
         	
         	else if (gamePad.getRawButton(1))    armsLift.set(-.2);
+        	
         	else armsLift.set(0);
         	//Above commands tab-spaced for readability (hopefully).
         	
