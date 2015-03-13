@@ -52,10 +52,8 @@ public class Robot extends SampleRobot {
         	double armsRaise = gamePad.getRawAxis(3); //for opening them up again
         	boolean limit1 = limitSwitch1.get();
         	boolean limit2 = limitSwitch2.get();
-            boolean limit3 = limitSwitch3.get();
-            boolean limit4 = limitSwitch4.get();
-        	double leftSide = gamePad.getRawAxis(1) * .60; //40% power
-        	double rightSide = gamePad.getRawAxis(4) * .40; //otherwise we move insanely too fast
+            double leftSide = gamePad.getRawAxis(1) * .60; //40% power
+        	double rightSide = gamePad.getRawAxis(4) * .60; //otherwise we move insanely too fast
         	double range = ultra.getRangeInches();
         	
         	if (buttonClose && limit2) 		relayArms.set(.5);//arms closing
@@ -64,21 +62,13 @@ public class Robot extends SampleRobot {
         	
         	else 							relayArms.set(0);
         	
-        	if (limit3)		armsLift.set(-armsRaise * .6); //arms raising
-        	
-        	else if (limit4) 	armsLift.set(armsLower * .1); //arms lowering
-        	
-        	else if (armsRaise < .20 && armsLower < .20 && gamePad.getRawButton(1))    armsLift.set(-.2);
+        	if (armsRaise < .20 && armsLower < .20 && gamePad.getRawButton(1))    armsLift.set(-.2);
         	
         	else armsLift.set(0);
         	//Above commands tab-spaced for readability (hopefully).
-        	
-        	SmartDashboard.putNumber("Distance to Nearest Object", range);
-        	SmartDashboard.putBoolean("Opening?", buttonOpen);
-        	SmartDashboard.putBoolean("Or closing?", buttonClose);
-        	SmartDashboard.putBoolean("Limit switch 1 open", limitSwitch1.get());
-        	SmartDashboard.putBoolean("Limit Switch 2 open",  limitSwitch2.get());  //Spitting stuff out to SmartDashboard.     	
-            Drive.arcadeDrive(-leftSide, -rightSide);
+        	armsLift.set(-armsRaise); //arms raising
+        	armsLift.set(armsLower * .1); //arms lowering
+        	Drive.arcadeDrive(-leftSide, -rightSide);
             Timer.delay(0.001);		//1ms delay for very fast updating (now watch our CPU cook an egg!)
             
       }
