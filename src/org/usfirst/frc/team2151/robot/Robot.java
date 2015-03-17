@@ -69,6 +69,8 @@ public class Robot extends SampleRobot {
         	armsLift.set(armsRaise); //arms raising
         	armsLift.set(-armsLower); //arms lowering
         	Drive.arcadeDrive(-leftSide, -rightSide);
+        	SmartDashboard.putNumber("Raise", armsRaise);
+        	SmartDashboard.putNumber("Lower", armsLower);
             Timer.delay(0.001);		//1ms delay for very fast updating (now watch our CPU cook an egg!)
             
       }
