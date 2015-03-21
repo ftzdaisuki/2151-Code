@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Ultrasonic;
 import edu.wpi.first.wpilibj.Ultrasonic.Unit;
 import edu.wpi.first.wpilibj.Victor;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+//import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 //to change the motor power: find gamePad.getRawAxis and edit the multiplying value.
 //do this for all getRawAxis values. Be consistent!
@@ -52,9 +52,9 @@ public class Robot extends SampleRobot {
         	double armsRaise = gamePad.getRawAxis(3); //for opening them up again
         	boolean limit1 = limitSwitch1.get();
         	boolean limit2 = limitSwitch2.get();
-            double leftSide = gamePad.getRawAxis(1) * .40; //40% power
-        	double rightSide = gamePad.getRawAxis(4) * .40; //otherwise we move insanely too fast
-        	double range = ultra.getRangeInches();
+            double leftSide = gamePad.getRawAxis(1) * .60; //60% power
+        	double rightSide = gamePad.getRawAxis(4) * .70; //otherwise we move insanely too fast
+        	//double range = ultra.getRangeInches();
         	
         	if (buttonClose && limit2) 		relayArms.set(.5);//arms closing
 
@@ -64,13 +64,12 @@ public class Robot extends SampleRobot {
         	
         	if (armsRaise < .20 && armsLower < .20 && gamePad.getRawButton(1))    armsLift.set(-.2);
         	
-<<<<<<< HEAD
         	else if (armsRaise == 0 && armsLower == 0) armsLift.set(0);
         	
         	else if (armsRaise > 0 && armsLower > 0) armsLift.set(-.2);
-=======
+        	
         	else if (armsRaise != 0 && armsLower != 0) armsLift.set(0);
->>>>>>> parent of 35e2451... Oops
+
         	//Above commands tab-spaced for readability (hopefully).
         	armsLift.set(armsRaise); //arms raising
         	armsLift.set(-armsLower); //arms lowering
