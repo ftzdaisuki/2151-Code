@@ -62,11 +62,11 @@ public class Robot extends SampleRobot {
         	
         	else 							relayArms.set(0);
         	
-        	if (armsRaise < .20 && armsLower < .20 && gamePad.getRawButton(1))    armsLift.set(-.2);
+        	if (armsRaise < .20 && armsLower < .20)    armsLift.set(armsRaise);
         	
-        	else if (armsRaise == 0 && armsLower == 0) armsLift.set(0);
+        	else if (armsRaise == 0 /*&& armsLower == 0*/) armsLift.set(-.20);
         	
-        	else if (armsRaise > 0 && armsLower > 0) armsLift.set(-.2);
+        	else if (/*armsRaise > 0 && */armsLower > 0) armsLift.set(-.50);
         	
         	//Above commands tab-spaced for readability (hopefully).
         	armsLift.set(armsRaise); //arms raising
