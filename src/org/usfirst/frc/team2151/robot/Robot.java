@@ -68,8 +68,6 @@ public class Robot extends SampleRobot {
         	
         	else if (armsRaise > 0 && armsLower > 0) armsLift.set(-.2);
         	
-        	else if (armsRaise != 0 && armsLower != 0) armsLift.set(0);
-
         	//Above commands tab-spaced for readability (hopefully).
         	armsLift.set(armsRaise); //arms raising
         	armsLift.set(-armsLower); //arms lowering
