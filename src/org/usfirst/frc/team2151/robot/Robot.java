@@ -41,7 +41,16 @@ public class Robot extends SampleRobot {
         ultra.setEnabled(true);
         ultra.setAutomaticMode(true);
    }
-           
+    	public void autonomous() {
+    		Drive.setSafetyEnabled(false);
+    		while (isAutonomous()) {
+    			Drive.tankDrive(-.5, -.5);
+    			Timer.delay(2);
+    			Drive.tankDrive(-.5, .5);
+    		}
+    	}
+    
+    
         public void operatorControl() {
         Drive.setSafetyEnabled(true);
         
