@@ -69,8 +69,6 @@ public class Robot extends SampleRobot {
         	else if (armsRaise > 0 /*&& armsLower > 0*/) armsLift.set(-.50);
         	
         	//Above commands tab-spaced for readability (hopefully).
-        	armsLift.set(armsRaise); //arms raising
-        	armsLift.set(-armsLower); //arms lowering
         	Drive.arcadeDrive(-leftSide, -rightSide);
             Timer.delay(0.001);		//1ms delay for very fast updating (now watch our CPU cook an egg!)
             
