@@ -65,17 +65,17 @@ public class Robot extends SampleRobot {
         	double rightSide = gamePad.getRawAxis(4) * .70; //otherwise we move insanely too fast
         	//double range = ultra.getRangeInches();
         	
-        	if (buttonClose && limit2) 		relayArms.set(.5);//arms closing
+        	if (buttonClose && limit2) 		relayArms.set(.7);//arms closing
 
-        	else if (buttonOpen && limit1)  relayArms.set(-.5);//arms opening
+        	else if (buttonOpen && limit1)  relayArms.set(-.7);//arms opening
         	
         	else 							relayArms.set(0);
         	
-        	if (armsRaise < .20 && armsLower < .2)    armsLift.set(-.25);
+        	if (armsRaise < .20 && armsLower < .2)    armsLift.set(-.15);
         	
-        	else if (armsRaise > .2 && armsLower < .2) armsLift.set(-.50);
+        	else if (armsRaise > .2 && armsLower < .2) armsLift.set(-1);
         	
-        	else if (armsRaise < .2 && armsLower > .2) armsLift.set(-.1);
+        	else if (armsRaise < .2 && armsLower > .2) armsLift.set(.15);
         	
         	else System.out.println("You screwed up somewhere.");
         	
