@@ -9,7 +9,8 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Ultrasonic;
 import edu.wpi.first.wpilibj.Ultrasonic.Unit;
 import edu.wpi.first.wpilibj.Victor;
-//import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.PowerDistributionPanel;
 
 //to change the motor power: find gamePad.getRawAxis and edit the multiplying value.
 //do this for all getRawAxis values. Be consistent!
@@ -25,7 +26,7 @@ public class Robot extends SampleRobot {
     DigitalInput limitSwitch4; //4 limit switches (some may be unused)
     Ultrasonic ultra; //ultrasonic rangefinder
     Unit kInches; //why do we need this?
-    
+    PowerDistributionPanel power;
     
     public Robot() {
         Drive = new RobotDrive(0, 1, 2, 3);
@@ -40,13 +41,14 @@ public class Robot extends SampleRobot {
 		ultra = new Ultrasonic(8,9,kInches);
         ultra.setEnabled(true);
         ultra.setAutomaticMode(true);
+        power = new PowerDistributionPanel();
    }
     	public void autonomous() {
     		Drive.setSafetyEnabled(false);
     		while (isAutonomous()) {
     			Drive.tankDrive(-.5, -.5);
     			Timer.delay(2);
-    			Drive.tankDrive(-.5, .5);
+    			Drive.tankDrive(-.18, .18);
     		}
     	}
     
@@ -65,9 +67,9 @@ public class Robot extends SampleRobot {
         	double rightSide = gamePad.getRawAxis(4) * .70; //otherwise we move insanely too fast
         	//double range = ultra.getRangeInches();
         	
-        	if (buttonClose && limit2) 		relayArms.set(.7);//arms closing
+        	if (buttonClose && limit2) 		relayArms.set(.75);//arms closing
 
-        	else if (buttonOpen && limit1)  relayArms.set(-.7);//arms opening
+        	else if (buttonOpen && limit1)  relayArms.set(-.75);//arms opening
         	
         	else 							relayArms.set(0);
         	
@@ -81,6 +83,7 @@ public class Robot extends SampleRobot {
         	
         	//Above commands tab-spaced for readability (hopefully).
         	Drive.arcadeDrive(-leftSide, -rightSide);
+        	SmartDashboard.putNumber("Battery", power.getVoltage());
             Timer.delay(0.001);		//1ms delay for very fast updating (now watch our CPU cook an egg!)
             
       }
