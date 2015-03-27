@@ -48,6 +48,7 @@ public class Robot extends SampleRobot {
     		while (isAutonomous()) {
     			Drive.tankDrive(.6, .6);
     			Timer.delay(3.0);
+    			Drive.tankDrive(0,0);
     			Drive.tankDrive(-.25, .25);
     		}
     	}
