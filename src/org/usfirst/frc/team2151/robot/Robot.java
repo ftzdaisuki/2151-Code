@@ -45,12 +45,81 @@ public class Robot extends SampleRobot {
    }
     	public void autonomous() {
     		Drive.setSafetyEnabled(false);
-    		while (isAutonomous()) {
-    			Drive.tankDrive(.6, .6);
+    		/*	Drive.tankDrive(.6, .6);
     			Timer.delay(3.0);
     			Drive.tankDrive(0,0);
     			Drive.tankDrive(-.25, .25);
-    		}
+    			*/
+    		double t = .5;
+    		     ///*
+    			 relayArms.set(.75);//1, close arm
+    			 Timer.delay(0.1);
+    			 relayArms.set(.0);
+    			 Timer.delay(t);
+    			 armsLift.set(-.8);//2, lift arm
+    			 Timer.delay(.25);
+    			 armsLift.set(0);
+    			 Timer.delay(t);
+    			 Drive.tankDrive(-.25, .25);//3, turn 90*
+    			 Timer.delay(.5);
+    			 Drive.tankDrive(0, 0);
+    			 Timer.delay(t);
+    			 Drive.tankDrive(.6, .6);//4, to next tote
+    			 Timer.delay(1);
+    			 Drive.tankDrive(0, 0);
+    			 Timer.delay(t);
+    			 Drive.tankDrive(.25, -.25);//5, turn 90* to tote
+    			 Timer.delay(.5);
+    			 Drive.tankDrive(0, 0);
+    			 Timer.delay(t);
+    			 //*/
+    			 /*
+    			 relayArms.set(-.75);//6, 0pen arms
+    			 Timer.delay(0.25);
+    			 relayArms.set(.0);
+    			 Timer.delay(t);
+    			 armsLift.set(.15);//7, lower arms
+    			 Timer.delay(0.25);
+    			 armsLift.set(0);
+    			 Timer.delay(t);
+    			 relayArms.set(-.75);//8, close arm
+    			 Timer.delay(0.25);
+    			 relayArms.set(0);
+    			 Timer.delay(t);
+    			 armsLift.set(-.8);//9, lift arm
+    			 Timer.delay(.25);
+    			 armsLift.set(0);
+    			 Timer.delay(t);
+    			 Drive.tankDrive(-.25, .25);//10, turn 90*
+    			 Timer.delay(.5);
+    			 Drive.tankDrive(0, 0);
+    			 Timer.delay(t);
+    			 */
+    			 /*
+    			 Drive.tankDrive(.6, .6);//11, passed the platform
+    			 Timer.delay(1);
+    			 Drive.tankDrive(0, 0);
+    			 Timer.delay(t);
+    			 Drive.tankDrive(.25, -.25);//12, turn to goal
+    			 Timer.delay(.5);
+    			 Drive.tankDrive(0, 0);
+    			 Timer.delay(t);
+    			 Drive.tankDrive(.6, .6);//13, to the goal
+    			 Timer.delay(1);
+    			 Drive.tankDrive(0, 0);
+    			 Timer.delay(t);
+    			 armsLift.set(.15);//14, arms down to goal
+    			 Timer.delay(0.25);
+    			 armsLift.set(0);
+    			 Timer.delay(t);
+    			 relayArms.set(-.75);//15, arms open
+    			 Timer.delay(0.1);
+    			 relayArms.set(.0);
+    			 */
+    			 while(autonomous)
+    			 {
+    			 }
+    			 
     	}
     
     
