@@ -116,7 +116,7 @@ public class Robot extends SampleRobot {
     			 Timer.delay(0.1);
     			 relayArms.set(.0);
     			 */
-    			 while(autonomous)
+    			 //while(autonomous)
     			 {
     			 }
     			 
@@ -137,9 +137,9 @@ public class Robot extends SampleRobot {
         	double rightSide = gamePad.getRawAxis(4) * .70; //otherwise we move insanely too fast
         	//double range = ultra.getRangeInches();
         	
-        	if (buttonClose && limit2) 		relayArms.set(.75);//arms closing
+        	if (buttonClose && limit2) 		relayArms.set(-.75);//arms closing
 
-        	else if (buttonOpen && limit1)  relayArms.set(-.75);//arms opening
+        	else if (buttonOpen && limit1)  relayArms.set(.75);//arms opening
         	
         	else 							relayArms.set(0);
         	
