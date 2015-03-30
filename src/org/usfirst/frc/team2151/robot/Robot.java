@@ -50,43 +50,51 @@ public class Robot extends SampleRobot {
     			Drive.tankDrive(0,0);
     			Drive.tankDrive(-.25, .25);
     			*/
-    		double t = .5;
+    		double t = 1;
     		     ///*
-    			 relayArms.set(.75);//1, close arm
+    			 Drive.tankDrive(.6, .6);//1, move forward to tote
+    			 Timer.delay(.2);
+    			 Drive.tankDrive(0, 0);
+    			 Timer.delay(t);
+    			 relayArms.set(.75);//2, close arm
     			 Timer.delay(0.1);
-    			 relayArms.set(.0);
+    			 relayArms.set(0);
     			 Timer.delay(t);
-    			 armsLift.set(-.8);//2, lift arm
-    			 Timer.delay(.25);
-    			 armsLift.set(0);
+    			 armsLift.set(-.8);//3, lift arm
+    			 Timer.delay(.75);
+    			 armsLift.set(-.15); //keeps the arms in the air
     			 Timer.delay(t);
-    			 Drive.tankDrive(-.25, .25);//3, turn 90*
+    			 Drive.tankDrive(.6, .6);//4, move forward with tote
+    			 Timer.delay(3.8);
+    			 Drive.tankDrive(0, 0);
+    			 Timer.delay(t);
+    			 /*Drive.tankDrive(-.25, .25);//4, turn 90*
     			 Timer.delay(.5);
     			 Drive.tankDrive(0, 0);
     			 Timer.delay(t);
-    			 Drive.tankDrive(.6, .6);//4, to next tote
+    			 Drive.tankDrive(.6, .6);//5, to next tote
     			 Timer.delay(1);
     			 Drive.tankDrive(0, 0);
     			 Timer.delay(t);
-    			 Drive.tankDrive(.25, -.25);//5, turn 90* to tote
+    			 Drive.tankDrive(.25, -.25);//6, turn 90* to tote
     			 Timer.delay(.5);
     			 Drive.tankDrive(0, 0);
     			 Timer.delay(t);
     			 //*/
     			 /*
-    			 relayArms.set(-.75);//6, 0pen arms
+    			 relayArms.set(-.75);//7, 0pen arms
     			 Timer.delay(0.25);
     			 relayArms.set(.0);
     			 Timer.delay(t);
-    			 armsLift.set(.15);//7, lower arms
+    			 armsLift.set(.15);//8, lower arms
     			 Timer.delay(0.25);
     			 armsLift.set(0);
     			 Timer.delay(t);
-    			 relayArms.set(-.75);//8, close arm
+    			 relayArms.set(-.75);//9, close arm
     			 Timer.delay(0.25);
     			 relayArms.set(0);
     			 Timer.delay(t);
-    			 armsLift.set(-.8);//9, lift arm
+    			 armsLift.set(-.8);//910, lift arm
     			 Timer.delay(.25);
     			 armsLift.set(0);
     			 Timer.delay(t);
