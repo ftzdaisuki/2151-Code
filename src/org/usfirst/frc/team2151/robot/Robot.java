@@ -1,6 +1,7 @@
 package org.usfirst.frc.team2151.robot;
 
 
+import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.SampleRobot;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.Joystick;
@@ -11,6 +12,7 @@ import edu.wpi.first.wpilibj.Ultrasonic.Unit;
 import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
+import edu.wpi.first.wpilibj.CameraServer.*;
 
 //to change the motor power: find gamePad.getRawAxis and edit the multiplying value.
 //do this for all getRawAxis values. Be consistent!
@@ -37,10 +39,11 @@ public class Robot extends SampleRobot {
         limitSwitch1 = new DigitalInput(0);
         limitSwitch2 = new DigitalInput(1);
         limitSwitch3 = new DigitalInput(2);
-        limitSwitch4 = new DigitalInput(3);        
+        limitSwitch4 = new DigitalInput(3);
 		ultra = new Ultrasonic(8,9,kInches);
         ultra.setEnabled(true);
         ultra.setAutomaticMode(true);
+        CameraServer.getInstance(); //camera used to judge arms closing
         power = new PowerDistributionPanel();
    }
     	public void autonomous() {
@@ -52,17 +55,11 @@ public class Robot extends SampleRobot {
     			*/
     		double t = 1;
     		     ///*
-    			 Drive.tankDrive(.6, .6);//1, move forward to tote
-    			 Timer.delay(.2);
-    			 Drive.tankDrive(0, 0);
-    			 Timer.delay(t);
     			 relayArms.set(.75);//2, close arm
     			 Timer.delay(0.1);
     			 relayArms.set(0);
     			 Timer.delay(t);
-<<<<<<< HEAD
     			 armsLift.set(-.8);//2, lift arm
-<<<<<<< HEAD
     			 Timer.delay(1);
     			 armsLift.set(-.15); // keeps the arms in the air
     			 Timer.delay(t);
@@ -76,35 +73,7 @@ public class Robot extends SampleRobot {
     			 relayArms.set(-.75);//5, re-opening the arms
     			 Timer.delay(0.1);
     			 relayArms.set(0);
-=======
-<<<<<<< HEAD
     			 Timer.delay(1);
-    			 armsLift.set(-.15); //3, keeps the arms in the air
-=======
-    			 armsLift.set(-.8);//3, lift arm
-    			 Timer.delay(.75);
-    			 armsLift.set(-.15); //keeps the arms in the air
->>>>>>> origin/master
-    			 Timer.delay(t);
-    			 Drive.tankDrive(.6, .6);//4, move forward with tote
-    			 Timer.delay(3.8);
-    			 Drive.tankDrive(0, 0);
-<<<<<<< HEAD
-    			 Timer.delay(t);
-    			 armsLift.set(0); //5, lowering arms post-auto
-    			 Timer.delay(2);
-    			 Timer.delay(t);
-    			 relayArms.set(-.75);//6, re-opening the arms
-    			 Timer.delay(0.1);
-    			 relayArms.set(0);
-=======
->>>>>>> origin/master
-=======
-    			 Timer.delay(.25);
-    			 armsLift.set(0);
->>>>>>> parent of 089cd3a... More script tweaks.
->>>>>>> origin/master
-    			 Timer.delay(t);
     			 /*Drive.tankDrive(-.25, .25);//4, turn 90*
     			 Timer.delay(.5);
     			 Drive.tankDrive(0, 0);
@@ -118,49 +87,6 @@ public class Robot extends SampleRobot {
     			 Drive.tankDrive(0, 0);
     			 Timer.delay(t);
     			 //*/
-    			 /*
-    			 relayArms.set(-.75);//7, 0pen arms
-    			 Timer.delay(0.25);
-    			 relayArms.set(.0);
-    			 Timer.delay(t);
-    			 armsLift.set(.15);//8, lower arms
-    			 Timer.delay(0.25);
-    			 armsLift.set(0);
-    			 Timer.delay(t);
-    			 relayArms.set(-.75);//9, close arm
-    			 Timer.delay(0.25);
-    			 relayArms.set(0);
-    			 Timer.delay(t);
-    			 armsLift.set(-.8);//910, lift arm
-    			 Timer.delay(.25);
-    			 armsLift.set(0);
-    			 Timer.delay(t);
-    			 Drive.tankDrive(-.25, .25);//10, turn 90*
-    			 Timer.delay(.5);
-    			 Drive.tankDrive(0, 0);
-    			 Timer.delay(t);
-    			 */
-    			 /*
-    			 Drive.tankDrive(.6, .6);//11, passed the platform
-    			 Timer.delay(1);
-    			 Drive.tankDrive(0, 0);
-    			 Timer.delay(t);
-    			 Drive.tankDrive(.25, -.25);//12, turn to goal
-    			 Timer.delay(.5);
-    			 Drive.tankDrive(0, 0);
-    			 Timer.delay(t);
-    			 Drive.tankDrive(.6, .6);//13, to the goal
-    			 Timer.delay(1);
-    			 Drive.tankDrive(0, 0);
-    			 Timer.delay(t);
-    			 armsLift.set(.15);//14, arms down to goal
-    			 Timer.delay(0.25);
-    			 armsLift.set(0);
-    			 Timer.delay(t);
-    			 relayArms.set(-.75);//15, arms open
-    			 Timer.delay(0.1);
-    			 relayArms.set(.0);
-    			 */
     			 //while(autonomous)
     			 {
     			 }
